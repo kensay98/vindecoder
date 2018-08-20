@@ -10,7 +10,15 @@ func DecodeVin(w http.ResponseWriter, r *http.Request) {
 	vin := mux.Vars(r)["vin"]
 
 	// Search vin in our db
-	vinFromDB := db.Get(vin) // TODO: Add error handling
+	vinFromDB, err := db.Get(vin)
+
+	if err != nil {
+		log.Error(err)
+		w.WriteHeader(http.StatusInternalServerError)
+		w.Write([]byte("500 - Something bad happened!"))
+		return
+	}
+
 	if vinFromDB != "" {
 		log.Debug("Reading from cache")
 		w.Write([]byte(vinFromDB))

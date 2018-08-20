@@ -1,13 +1,13 @@
 package storage
 
 import (
-	"bitbucket.org/babadjanov/vindecoder/logger"
-	"bitbucket.org/babadjanov/vindecoder/config"
+	"github.com/kensay98/vindecoder/logger"
+	"github.com/kensay98/vindecoder/config"
 )
 
 type Storage interface {
-	Get(key string) string
-	Set(key, value string)
+	Get(key string) (string, error)
+	Set(key, value string) error
 }
 
 var storage Storage
